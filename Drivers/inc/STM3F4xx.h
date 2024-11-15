@@ -115,7 +115,7 @@ typedef struct
 #define RCC 					((RCC_RegDef_t*)RCC_BASE_ADDR)
 
 
-typedef struct {
+typedef struct {						//OFFSET Address
 
 	__vo uint32_t RCC_CR; 					//0x00
 	__vo uint32_t RCC_PLL_CFGR;				//0x04
@@ -135,26 +135,26 @@ typedef struct {
 	__vo uint32_t reserved3;				//0x3C
 	__vo uint32_t RCC_APB1ENR;				//0x40
 	__vo uint32_t RCC_APB2ENR;				//0x44
-	__vo uint32_t reserved4;			//0x48
-	__vo uint32_t reserved5;			//0x4C
-	__vo uint32_t RCC_AHB1LPENR;		//0x50
-	__vo uint32_t RCC_AHB2LPENR;		//0x54
-	__vo uint32_t RCC_AHB3LPENR;		//0x58
-	__vo uint32_t reserved6;			//0x5C
-	__vo uint32_t RCC_APB1LPENR;		//0x60
-	__vo uint32_t RCC_APB2LPENR;		//0x64
-	__vo uint32_t reserved7;			//0x68
-	__vo uint32_t reserved8;			//0x6C
-	__vo uint32_t RCC_BDCR;			//0x70
-	__vo uint32_t RCC_CSR;			//0x74
-	__vo uint32_t reserved9;			//0x78
-	__vo uint32_t reserved10;			//0x7C
-	__vo uint32_t RCC_SS_CGR;		//0x80
-	__vo uint32_t RCC_PLLI2SCFGR;	//0x84
-	__vo uint32_t RCC_PLLSAICFGR;	//0x88
-	__vo uint32_t RCC_DCKCFGR;		//0x8C
-	__vo uint32_t RCC_CKGATEENR;		//0x90
-	__vo uint32_t RCC_DCKCFGR2;		//0x94
+	__vo uint32_t reserved4;				//0x48
+	__vo uint32_t reserved5;				//0x4C
+	__vo uint32_t RCC_AHB1LPENR;			//0x50
+	__vo uint32_t RCC_AHB2LPENR;			//0x54
+	__vo uint32_t RCC_AHB3LPENR;			//0x58
+	__vo uint32_t reserved6;				//0x5C
+	__vo uint32_t RCC_APB1LPENR;			//0x60
+	__vo uint32_t RCC_APB2LPENR;			//0x64
+	__vo uint32_t reserved7;				//0x68
+	__vo uint32_t reserved8;				//0x6C
+	__vo uint32_t RCC_BDCR;					//0x70
+	__vo uint32_t RCC_CSR;					//0x74
+	__vo uint32_t reserved9;				//0x78
+	__vo uint32_t reserved10;				//0x7C
+	__vo uint32_t RCC_SS_CGR;				//0x80
+	__vo uint32_t RCC_PLLI2SCFGR;			//0x84
+	__vo uint32_t RCC_PLLSAICFGR;			//0x88
+	__vo uint32_t RCC_DCKCFGR;				//0x8C
+	__vo uint32_t RCC_CKGATEENR;			//0x90
+	__vo uint32_t RCC_DCKCFGR2;				//0x94
 } RCC_RegDef_t;
 
 /* Clock enable macros for GPIO
