@@ -11,7 +11,7 @@
 #include <Stdint.h>
 typedef struct {
 	uint8_t GPIOPinNumber; 				/*GPIO Pin Number check ref. @Pin_Number*/
-	uint8_t GPIOmode;					/*GPIO Mode check ref. @PIN_MODES */
+	uint8_t GPIOMode;					/*GPIO Mode check ref. @PIN_MODES */
 	uint8_t GPIOSpeed;					/*GPIO Speed check ref.@SPEED */
 	uint8_t GPIOOutputType;				/*GPIO Output Type check ref. @OUTPUT_TYPE */
 	uint8_t GPIO_pull_Up_Dwn;			/*GPIO pull-up or pull-down check ref. @PULL_UP_DOWN_*/
@@ -23,7 +23,7 @@ typedef struct {
 	//pointer to hold the base address of the peripheral
 
 	GPIO_RegDef_t *pGPIOx;				/*this holds the base address of the GPIO to which pin it belongs */
-	GPIO_PinConfig_t GPIO_PinConfig;	/*This holds the GPIO pin Configuration Settings*/
+	GPIO_PinConfig_t *GPIO_PinConfig;	/*This holds the GPIO pin Configuration Settings*/
 
 	}GPIO_Handle_t ;
 
@@ -106,7 +106,7 @@ typedef struct {
 	uint8_t GPIO_Read_From_Input_Pin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber);
 	uint16_t GPIO_Read_From_Input_Port(GPIO_RegDef_t *pGPIOx);
 	void GPIO_To_Output_Port(GPIO_RegDef_t *pGPIOx , uint8_t Value);
-	void GPIO_To_Output_Pin(GPIO_RegDef_t *pGPIOx, uint_8t PinNumber,uint8_t Value);
+	void GPIO_To_Output_Pin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber,uint8_t Value);
 	void GPIO_Toggle_Pin(GPIO_RegDef_t *pGPIOx ,uint8_t PinNumber );
 
 	/*

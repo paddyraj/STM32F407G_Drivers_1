@@ -141,6 +141,39 @@
 		//3. configure the pull-up or pull-down register
 		//4. configure the output type
 		//5. configure the alt-function type
+
+		uint32_t temp = 0;
+
+		if(pGPIOHandle->GPIO_PinConfig.GPIOMode <= GPIO_MODE_ANG_MD){
+
+			temp = (pGPIOHandle->GPIO_PinConfig.GPIOMode << ( 2 * pGPIOHandle->GPIO_PinConfig.GPIOPinNumber));
+			pGPIOHandle->pGPIOx->MODER = temp;
+
+		}
+		else{
+				///Interrupt code
+		}
+
+		//2. configure the speed
+		temp = 0;
+		temp = (pGPIOHandle->GPIO_PinConfig.GPIOSpeed <<( 2 * pGPIOHandle->GPIO_PinConfig.GPIOPinNumber ));
+		pGPIOHandle->pGPIOx->OSPEEDR = temp;
+
+
+		//3.configure the pull-up or pull-down register
+		temp = 0;
+		temp = (pGPIOHandle->GPIO_PinConfig.GPIO_pull_Up_Dwn <<( 2 * pGPIOHandle->GPIO_PinConfig.GPIOPinNumber));
+		pGPIOHandle->pGPIOx->PUPDR = temp;
+
+		//4. configure the output type
+		temp = 0;
+		temp = (pGPIOHandle->GPIO_PinConfig.GPIOOutputType << pGPIOHandle->GPIO_PinConfig.GPIOPinNumber);
+		pGPIOHandle->pGPIOx->OTYPER = temp;
+
+
+
+
+
 	}
 
 	/***************************************************************************************
