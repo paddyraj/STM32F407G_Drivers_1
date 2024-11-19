@@ -11,6 +11,19 @@
 #include <stdint.h>
 #define __vo volatile
 
+/*
+ * Generic Macros
+ * */
+#define ENABLE 					1
+#define DISBLE 					0
+#define SET 					ENABLE
+#define RESET 					DISBLE
+#define GPIO_PIN_SET			SET
+#define GPIO_PIN_RESET			RESET
+/*
+ *
+ * */
+
 #define FLASH_BASE_ADDR			0x08000000UL
 #define SRAM1_BASE_ADDR			0x20000000UL
 #define SRAM2_BASE_ADDR			0x2001C000UL
@@ -96,7 +109,7 @@ typedef struct
 	__vo uint32_t AFRL;
 	__vo uint32_t AFRH;
 
-	} GpioRegDef_t;
+	} GPIO_RegDef_t;
 
 	/*Peripheral Definitions (peripheral base address type-casted to xxx_RegDef_t)
 	 * */
