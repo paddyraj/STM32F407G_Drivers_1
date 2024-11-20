@@ -7,8 +7,7 @@
 
 #ifndef STM3F4XX_H_
 #define STM3F4XX_H_
-
-#include "STM32F407_gpio_driver.h"
+//#include "STM32F407_gpio_driver.h"
 #include <stdint.h>
 #define __vo volatile
 
@@ -107,7 +106,8 @@ typedef struct
 	__vo uint32_t ODR;
 	__vo uint32_t BSRR;
 	__vo uint32_t LCKR;
-	__vo uint32_t AFR[2];
+	__vo uint32_t AFRL;
+	__vo uint32_t AFRH;
 
 	} GPIO_RegDef_t ;
 

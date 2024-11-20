@@ -75,39 +75,39 @@
 		else {
 
 			if(GPIOx == GPIOA){
-			GPIOA_PCLK_DI()();
+					GPIOA_PCLK_DI();
 			}
 			else if(GPIOx == GPIOB)
 			{
-					GPIOB_PCLK_DI()();
+					GPIOB_PCLK_DI();
 			}
 			else if(GPIOx == GPIOB)
 			{
-					GPIOB_PCLK_DI()();
+					GPIOB_PCLK_DI();
 			}
 			else if(GPIOx == GPIOC)
 			{
-				 	GPIOC_PCLK_DI()();
+				 	GPIOC_PCLK_DI();
 			}
 			else if(GPIOx == GPIOD)
 			{
-					GPIOD_PCLK_DI()();
+					GPIOA_PCLK_DI();
 			}
 			else if (GPIOx == GPIOE)
 			{
-					GPIOE_PCLK_DI()();
+					GPIOE_PCLK_DI();
 			}
 			else if (GPIOX == GPIOF){
-					GPIOE_PCLK_DI()();
+					GPIOE_PCLK_DI();
 			}
 			else if (GPIOX == GPIOF){
-					GPIOF_PCLK_DI()();
+					GPIOF_PCLK_DI();
 			}
 			else if (GPIOX == GPIOG){
-					GPIOG_PCLK_DI()();
+					GPIOG_PCLK_DI();
 			}
 			else if (GPIOX == GPIOH){
-					GPIOH_PCLK_DI()();
+					GPIOH_PCLK_DI();
 			}
 			else if (GPIOX == GPIOI){
 			}
@@ -147,7 +147,7 @@
 		if(pGPIOHandle->GPIO_PinConfig.GPIOMode <= GPIO_MODE_ANG_MD){
 
 			temp = (pGPIOHandle->GPIO_PinConfig.GPIOMode << ( 2 * pGPIOHandle->GPIO_PinConfig.GPIOPinNumber));
-			pGPIOHandle->pGPIOx->MODER = temp;
+			pGPIOHandle->pGPIOx->MODER |= temp;
 
 		}
 		else{
@@ -157,24 +157,33 @@
 		//2. configure the speed
 		temp = 0;
 		temp = (pGPIOHandle->GPIO_PinConfig.GPIOSpeed <<( 2 * pGPIOHandle->GPIO_PinConfig.GPIOPinNumber ));
-		pGPIOHandle->pGPIOx->OSPEEDR = temp;
+		pGPIOHandle->pGPIOx->OSPEEDR |= temp;
 
 
 		//3.configure the pull-up or pull-down register
 		temp = 0;
 		temp = (pGPIOHandle->GPIO_PinConfig.GPIO_pull_Up_Dwn <<( 2 * pGPIOHandle->GPIO_PinConfig.GPIOPinNumber));
-		pGPIOHandle->pGPIOx->PUPDR = temp;
+		pGPIOHandle->pGPIOx->PUPDR |= temp;
 
 		//4. configure the output type
 		temp = 0;
 		temp = (pGPIOHandle->GPIO_PinConfig.GPIOOutputType << pGPIOHandle->GPIO_PinConfig.GPIOPinNumber);
-		pGPIOHandle->pGPIOx->OTYPER = temp;
+		pGPIOHandle->pGPIOx->OTYPER |= temp;
+		temp = 0;
 
+		//5. configure the alt-function type
 
-
-
-
+		if(pGPIOHandle->GPIO_PinConfig_t.GPIOMode == Alt_Fn_Mode )
+		{
+			uint8_t temp1, temp2;
+			temp1 = pGPIOHandle->GPIO_PinConfig_t.GPIOPinNumber / 8;
+			temp2 = pGPIOHandle->GPIO_PinConfig_t.GPIOPinNumber % 8;
+			pGPIOHandle->pGPIOx.AFR[ temp1 ] |= ( pGPIOHandle->GPIO_PinConfig_t.Alt_Fn_Mode <<( 4 * temp2 ));
+		}
+		temp = 0;
 	}
+
+
 
 	/***************************************************************************************
 	 * @fn 					- GPIO_DeInit
@@ -250,7 +259,7 @@
 	void GPIO_To_Output_Port(GPIO_RegDef_t *pGPIOx , uint8_t Value){
 
 	}
-	void GPIO_To_Output_Pin(GPIO_RegDef_t *pGPIOx, uint_8t PinNumber,uint8_t Value){
+	void GPIO_To_Output_Pin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber,uint8_t Value){
 
 	}
 	void GPIO_Toggle_Pin(GPIO_RegDef_t *pGPIOx ,uint8_t PinNumber ){
