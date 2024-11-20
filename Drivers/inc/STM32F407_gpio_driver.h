@@ -66,6 +66,8 @@
 #define GPIO_PIN_15				15		//GPIOx pin number 15
 
 
+
+
 typedef struct {
 	uint8_t GPIOPinNumber; 				/*GPIO Pin Number check ref. @Pin_Number*/
 	uint8_t GPIOMode;					/*GPIO Mode check ref. @PIN_MODES */

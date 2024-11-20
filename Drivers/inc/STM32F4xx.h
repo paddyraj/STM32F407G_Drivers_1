@@ -8,7 +8,7 @@
 #ifndef STM3F4XX_H_
 #define STM3F4XX_H_
 
-#include "STM32F407_gpio_driver.h"
+//#include "STM32F407_gpio_driver.h"
 #include <stdint.h>
 #define __vo volatile
 
@@ -93,21 +93,23 @@
 #define SYSCFG					(APB2_BASE_ADDR + 0x3800)
 
 
+
+
 //*******************Peripheral Definition Structure**********************
 
 //PERIPHERAL LAYER ( Specific to STM32F07xx-DISCO, check REF Manual )
 
 typedef struct
 {
-	__vo uint32_t MODER;
-	__vo uint32_t OTYPER;
-	__vo uint32_t OSPEEDR;
-	__vo uint32_t PUPDR;
-	__vo uint32_t IDR;
-	__vo uint32_t ODR;
-	__vo uint32_t BSRR;
-	__vo uint32_t LCKR;
-	__vo uint32_t AFR[2];
+	__vo uint32_t MODER;				// mode register
+	__vo uint32_t OTYPER;				//output type register
+	__vo uint32_t OSPEEDR;				//output speed register
+	__vo uint32_t PUPDR;				//port push-pull register
+	__vo uint32_t IDR;					//port input data register
+	__vo uint32_t ODR;					//port output data register
+	__vo uint32_t BSRR;					//port bit set/reset register
+	__vo uint32_t LCKR;					//port configuration lock register
+	__vo uint32_t AFR[2];				//port alternative function register [0]low and [1]high register
 
 	} GPIO_RegDef_t ;
 
@@ -127,6 +129,20 @@ typedef struct
 	//RCC RegDef specifications
 #define RCC 					((RCC_RegDef_t*)RCC_BASE_ADDR)
 
+
+/*
+ * 	GPIO RESET Macros
+ * */
+
+#define GPIOA_REG_RESET()		do{(RCC->AHB1ENR |= (1<<0));  (RCC->AHB1ENR |= (1<<0)); }while(0)
+#define GPIOB_REG_RESET()		do{(RCC->AHB1ENR |= (1<<0));  (RCC->AHB1ENR |= (1<<0)); }while(0)
+#define GPIOC_REG_RESET()		do{(RCC->AHB1ENR |= (1<<0));  (RCC->AHB1ENR |= (1<<0)); }while(0)
+#define GPIOD_REG_RESET()		do{(RCC->AHB1ENR |= (1<<0));  (RCC->AHB1ENR |= (1<<0)); }while(0)
+#define GPIOE_REG_RESET()		do{(RCC->AHB1ENR |= (1<<0));  (RCC->AHB1ENR |= (1<<0)); }while(0)
+#define GPIOF_REG_RESET()		do{(RCC->AHB1ENR |= (1<<0));  (RCC->AHB1ENR |= (1<<0)); }while(0)
+#define GPIOG_REG_RESET()		do{(RCC->AHB1ENR |= (1<<0));  (RCC->AHB1ENR |= (1<<0)); }while(0)
+#define GPIOH_REG_RESET()		do{(RCC->AHB1ENR |= (1<<0));  (RCC->AHB1ENR |= (1<<0)); }while(0)
+#define GPIOI_REG_RESET()		do{(RCC->AHB1ENR |= (1<<0));  (RCC->AHB1ENR |= (1<<0)); }while(0)
 
 typedef struct {						//OFFSET Address
 
@@ -173,79 +189,79 @@ typedef struct {						//OFFSET Address
 /* Clock enable macros for GPIO
 */
 
-#define GPIOA_PCLK_EN()		(	RCC -> AHB1ENR |= (1<<0)	)
-#define GPIOB_PCLK_EN()		(	RCC -> AHB1ENR |= (1<<1)	)
-#define GPIOC_PCLK_EN()		(	RCC -> AHB1ENR |= (1<<2)	)
-#define GPIOD_PCLK_EN()		(	RCC -> AHB1ENR |= (1<<3)	)
-#define GPIOE_PCLK_EN()		(	RCC -> AHB1ENR |= (1<<4)	)
-#define GPIOF_PCLK_EN()		(	RCC -> AHB1ENR |= (1<<5)	)
-#define GPIOG_PCLK_EN()		(	RCC -> AHB1ENR |= (1<<6)	)
-#define GPIOH_PCLK_EN()		(	RCC -> AHB1ENR |= (1<<7)	)
-//#define GPIOI_PERI_CLK_EN()		(	RCC -> AHB1ENR |= (1<<0)	)
+#define GPIOA_PCLK_EN()		(	RCC->AHB1ENR |= (1<<0)	)
+#define GPIOB_PCLK_EN()		(	RCC->AHB1ENR |= (1<<1)	)
+#define GPIOC_PCLK_EN()		(	RCC->AHB1ENR |= (1<<2)	)
+#define GPIOD_PCLK_EN()		(	RCC->AHB1ENR |= (1<<3)	)
+#define GPIOE_PCLK_EN()		(	RCC->AHB1ENR |= (1<<4)	)
+#define GPIOF_PCLK_EN()		(	RCC->AHB1ENR |= (1<<5)	)
+#define GPIOG_PCLK_EN()		(	RCC->AHB1ENR |= (1<<6)	)
+#define GPIOH_PCLK_EN()		(	RCC->AHB1ENR |= (1<<7)	)
+#define GPIOI_PCLK_EN()		(	RCC->AHB1ENR |= (1<<8)	)
 
 
 /* Clock disable macros for GPIO
 */
 
-#define GPIOA_PCLK_DI()		(	RCC -> AHB1ENR &= ~(1<<0)	)
-#define GPIOB_PCLK_DI()		(	RCC -> AHB1ENR &= ~(1<<1)	)
-#define GPIOC_PCLK_DI()		(	RCC -> AHB1ENR &= ~(1<<2)	)
-#define GPIOD_PCLK_DI()		(	RCC -> AHB1ENR &= ~(1<<3)	)
-#define GPIOE_PCLK_DI()		(	RCC -> AHB1ENR &= ~(1<<4)	)
-#define GPIOF_PCLK_DI()		(	RCC -> AHB1ENR &= ~(1<<5)	)
-#define GPIOG_PCLK_DI()		(	RCC -> AHB1ENR &= ~(1<<6)	)
-#define GPIOH_PCLK_DI()		(	RCC -> AHB1ENR &= ~(1<<7)	)
-
+#define GPIOA_PCLK_DI()		(	RCC->AHB1ENR &= ~(1<<0)	)
+#define GPIOB_PCLK_DI()		(	RCC->AHB1ENR &= ~(1<<1)	)
+#define GPIOC_PCLK_DI()		(	RCC->AHB1ENR &= ~(1<<2)	)
+#define GPIOD_PCLK_DI()		(	RCC->AHB1ENR &= ~(1<<3)	)
+#define GPIOE_PCLK_DI()		(	RCC->AHB1ENR &= ~(1<<4)	)
+#define GPIOF_PCLK_DI()		(	RCC->AHB1ENR &= ~(1<<5)	)
+#define GPIOG_PCLK_DI()		(	RCC->AHB1ENR &= ~(1<<6)	)
+#define GPIOH_PCLK_DI()		(	RCC->AHB1ENR &= ~(1<<7)	)
+#define GPIOI_PCLK_DI()		(	RCC->AHB1ENR &= ~(1<<8)	)
 
 // Clock enable macros for SPIx
 
-#define SPI1_PCLK_EN()			(	RCC -> RCC_APB2ENR |= (1<<12)	)
-#define SPI4_PCLK_EN()			(	RCC -> RCC_APB2ENR |= (1<<13)	)
-#define SPI2_PCLK_EN()			(	RCC -> RCC_APB1ENR |= (1<<14)	)
-#define SPI3_PCLK_EN()			(	RCC -> RCC_APB1ENR |= (1<<15)	)
+#define SPI1_PCLK_EN()			(	RCC->RCC_APB2ENR |= (1<<12)	)
+#define SPI4_PCLK_EN()			(	RCC->RCC_APB2ENR |= (1<<13)	)
+#define SPI2_PCLK_EN()			(	RCC->RCC_APB1ENR |= (1<<14)	)
+#define SPI3_PCLK_EN()			(	RCC->RCC_APB1ENR |= (1<<15)	)
 
 //Clock disable macros for SPIx
 
-#define SPI1_PCLK_DI()			(	RCC -> RCC_APB2ENR &= ~(1<<12)	)
-#define SPI4_PCLK_DI()			(	RCC -> RCC_APB2ENR &= ~(1<<13)	)
-#define SPI2_PCLK_DI()			(	RCC -> RCC_APB1ENR &= ~(1<<14)	)
-#define SPI3_PCLK_DI()			(	RCC -> RCC_APB1ENR &= ~(1<<15)	)
+#define SPI1_PCLK_DI()			(	RCC->RCC_APB2ENR &= ~(1<<12)	)
+#define SPI4_PCLK_DI()			(	RCC->RCC_APB2ENR &= ~(1<<13)	)
+#define SPI2_PCLK_DI()			(	RCC->RCC_APB1ENR &= ~(1<<14)	)
+#define SPI3_PCLK_DI()			(	RCC->RCC_APB1ENR &= ~(1<<15)	)
 
 //Clock enable macros for I2Cx
 
-#define I2C1_PCLK_EN()			(	RCC -> RCC_APB1ENR |= (1<<21)	)
-#define I2C2_PCLK_EN()			(	RCC -> RCC_APB1ENR |= (1<<22)	)
-#define I2C3_PCLK_EN()			(	RCC -> RCC_APB1ENR |= (1<<23)	)
+#define I2C1_PCLK_EN()			(	RCC->RCC_APB1ENR |= (1<<21)	)
+#define I2C2_PCLK_EN()			(	RCC->RCC_APB1ENR |= (1<<22)	)
+#define I2C3_PCLK_EN()			(	RCC->RCC_APB1ENR |= (1<<23)	)
 
 //Clock disable macros for I2Cx
 
-#define I2C1_PCLK_DI()			(	RCC -> RCC_APB1ENR &= ~(1<<21)	)
-#define I2C2_PCLK_DI()			(	RCC -> RCC_APB1ENR &= ~(1<<22)	)
-#define I2C3_PCLK_DI()			(	RCC -> RCC_APB1ENR &= ~(1<<23)	)
+#define I2C1_PCLK_DI()			(	RCC->RCC_APB1ENR &= ~(1<<21)	)
+#define I2C2_PCLK_DI()			(	RCC->RCC_APB1ENR &= ~(1<<22)	)
+#define I2C3_PCLK_DI()			(	RCC->RCC_APB1ENR &= ~(1<<23)	)
 
 // Clock enable macros for USARTx and UART
-#define USART1_PCLK_EN()		(	RCC -> RCC_APB2ENR |= (1<<4)	)
-#define USART2_PCLK_EN()		(	RCC -> RCC_APB1ENR |= (1<<17)	)
-#define USART3_PCLK_EN()		(	RCC -> RCC_APB1ENR |= (1<<18)	)
-#define UART4_PCLK_EN()			(	RCC -> RCC_APB1ENR |= (1<<19)	)
-#define UART5_PCLK_EN()			(	RCC -> RCC_APB1ENR |= (1<<20)	)
-#define USART6_PCLK_EN()		(	RCC -> RCC_APB2ENR |= (1<<5)	)
+#define USART1_PCLK_EN()		(	RCC->RCC_APB2ENR |= (1<<4)	)
+#define USART2_PCLK_EN()		(	RCC->RCC_APB1ENR |= (1<<17)	)
+#define USART3_PCLK_EN()		(	RCC->RCC_APB1ENR |= (1<<18)	)
+#define UART4_PCLK_EN()			(	RCC->RCC_APB1ENR |= (1<<19)	)
+#define UART5_PCLK_EN()			(	RCC->RCC_APB1ENR |= (1<<20)	)
+#define USART6_PCLK_EN()		(	RCC->RCC_APB2ENR |= (1<<5)	)
 
 // Clock Disable macros for USARTx and UART
-#define USART1_PCLK_DI()		(	RCC -> RCC_APB2ENR &= ~(1<<4)	)
-#define USART2_PCLK_DI()		(	RCC -> RCC_APB1ENR &= ~(1<<17)	)
-#define USART3_PCLK_DI()		(	RCC -> RCC_APB1ENR &= ~(1<<18)	)
-#define UART4_PCLK_DI()			(	RCC -> RCC_APB1ENR &= ~(1<<19)	)
-#define UART5_PCLK_DI()			(	RCC -> RCC_APB1ENR &= ~(1<<20)	)
-#define USART6_PCLK_DI()		(	RCC -> RCC_APB2ENR &= ~(1<<5)	)
+#define USART1_PCLK_DI()		(	RCC->RCC_APB2ENR &= ~(1<<4)	)
+#define USART2_PCLK_DI()		(	RCC->RCC_APB1ENR &= ~(1<<17)	)
+#define USART3_PCLK_DI()		(	RCC->RCC_APB1ENR &= ~(1<<18)	)
+#define UART4_PCLK_DI()			(	RCC->RCC_APB1ENR &= ~(1<<19)	)
+#define UART5_PCLK_DI()			(	RCC->RCC_APB1ENR &= ~(1<<20)	)
+#define USART6_PCLK_DI()		(	RCC->RCC_APB2ENR &= ~(1<<5)	)
 
 //Clock enable macros for SYSCFG
 
-#define SYSCFG_PCLK_EN()		(	RCC-> RCC_APB2ENR |=(1>>14) 	)
+#define SYSCFG_PCLK_EN()		(	RCC->RCC_APB2ENR |=(1>>14) 	)
 
 //Clock enable macros for SYSCFG
 
-#define SYSCFG_PCLK_DI()		(	RCC-> RCC_APB2ENR &= ~(1>>14) 	)
+#define SYSCFG_PCLK_DI()		(	RCC->RCC_APB2ENR &= ~(1>>14) 	)
 
 
 

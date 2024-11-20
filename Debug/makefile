@@ -60,7 +60,7 @@ main-build: STM32F407V_drivers.elf secondary-outputs
 
 # Tool invocations
 STM32F407V_drivers.elf STM32F407V_drivers.map: $(OBJS) $(USER_OBJS) C:\Users\Raj\ paddy\Desktop\Embedded\ Systems\STM32\MCU-1\STM32F407V_drivers\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "STM32F407V_drivers.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Raj paddy\Desktop\Embedded Systems\STM32\MCU-1\STM32F407V_drivers\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32F407V_drivers.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "STM32F407V_drivers.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Raj paddy\Desktop\Embedded Systems\STM32\MCU-1\STM32F407V_drivers\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32F407V_drivers.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
