@@ -133,15 +133,15 @@ typedef struct
  * 	GPIO RESET Macros
  * */
 
-#define GPIOA_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<0));  (RCC->RCC_AHB1ENR |= (1<<0)); }while(0)
-#define GPIOB_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<0));  (RCC->RCC_AHB1ENR |= (1<<0)); }while(0)
-#define GPIOC_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<0));  (RCC->RCC_AHB1ENR |= (1<<0)); }while(0)
-#define GPIOD_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<0));  (RCC->RCC_AHB1ENR |= (1<<0)); }while(0)
-#define GPIOE_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<0));  (RCC->RCC_AHB1ENR |= (1<<0)); }while(0)
-#define GPIOF_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<0));  (RCC->RCC_AHB1ENR |= (1<<0)); }while(0)
-#define GPIOG_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<0));  (RCC->RCC_AHB1ENR |= (1<<0)); }while(0)
-#define GPIOH_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<0));  (RCC->RCC_AHB1ENR |= (1<<0)); }while(0)
-#define GPIOI_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<0));  (RCC->RCC_AHB1ENR |= (1<<0)); }while(0)
+#define GPIOA_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<0));  (RCC->RCC_AHB1ENR &= ~(1<<0)); }while(0)
+#define GPIOB_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<0));  (RCC->RCC_AHB1ENR &= ~ (1<<0)); }while(0)
+#define GPIOC_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<0));  (RCC->RCC_AHB1ENR &= ~ (1<<0)); }while(0)
+#define GPIOD_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<0));  (RCC->RCC_AHB1ENR &= ~ (1<<0)); }while(0)
+#define GPIOE_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<0));  (RCC->RCC_AHB1ENR &= ~ (1<<0)); }while(0)
+#define GPIOF_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<0));  (RCC->RCC_AHB1ENR &= ~ (1<<0)); }while(0)
+#define GPIOG_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<0));  (RCC->RCC_AHB1ENR &= ~ (1<<0)); }while(0)
+#define GPIOH_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<0));  (RCC->RCC_AHB1ENR &= ~ (1<<0)); }while(0)
+#define GPIOI_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<0));  (RCC->RCC_AHB1ENR &= ~ (1<<0)); }while(0)
 
 typedef struct {						//OFFSET Address
 
