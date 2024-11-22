@@ -28,6 +28,8 @@
 
 //@OUTPUT_TYPE
 
+
+
 #define GPIO_MODE_PP			0		//Output type is push-pull
 #define GPIO_MODE_OD			1		//output type is open drain
 

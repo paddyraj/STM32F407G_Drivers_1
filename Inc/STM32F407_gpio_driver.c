@@ -6,8 +6,8 @@
  */
 
 #include "Stm32f4xx.h"
-//#include "STM32F407_gpio_driver.h"
 #include "STM32F407_gpio_driver.h"
+
 
 	/*
 	 * Peripheral Clock Setup
@@ -33,9 +33,8 @@
 
 	void GPIO_PClk_Ctr(GPIO_RegDef_t *pGPIOx , uint8_t EnorDi){
 		if (EnorDi == ENABLE){
-			if(pGPIOx == GPIOA)
-			{
-					GPIOA_PCLK_EN();
+			if(pGPIOx == GPIOA){
+			GPIOA_PCLK_EN();
 			}
 			else if(pGPIOx == GPIOB)
 			{
@@ -57,20 +56,16 @@
 			{
 					GPIOE_PCLK_EN();
 			}
-			else if (pGPIOx == GPIOF)
-			{
+			else if (pGPIOx == GPIOF){
 					GPIOE_PCLK_EN();
 			}
-			else if (pGPIOx == GPIOF)
-			{
+			else if (pGPIOx == GPIOF){
 					GPIOF_PCLK_EN();
 			}
-			else if (pGPIOx == GPIOG)
-			{
+			else if (pGPIOx == GPIOG){
 					GPIOG_PCLK_EN();
 			}
-			else if (pGPIOx == GPIOH)
-			{
+			else if (pGPIOx == GPIOH){
 					GPIOH_PCLK_EN();
 			}
 			else if (pGPIOx == GPIOI){
@@ -80,8 +75,7 @@
 
 		else {
 
-			if(pGPIOx == GPIOA)
-			{
+			if(pGPIOx == GPIOA){
 					GPIOA_PCLK_DI();
 			}
 			else if(pGPIOx == GPIOB)
@@ -152,53 +146,46 @@
 
 		uint32_t temp = 0;
 
-		if(pGPIOHandle->GPIO_PinConfig.GPIOMode <= GPIO_MODE_ANG_MD){
-
-			temp = (pGPIOHandle->GPIO_PinConfig.GPIOMode << ( 2 * pGPIOHandle->GPIO_PinConfig.GPIOPinNumber));//clearing
-			pGPIOHandle->pGPIOx->MODER &= ~(0x3 >> pGPIOHandle->GPIO_PinConfig.GPIOPinNumber);
+		if(pGPIOHandle->GPIO_PinConfig->GPIOMode <= GPIO_MODE_ANG_MD){
+			//non - intruupt mode code
+			temp = pGPIOHandle->GPIO_PinConfig->GPIOMode << (2*pGPIOHandle->GPIO_PinConfig->GPIOPinNumber );
+			pGPIOHandle->pGPIOx->MODER &= ~(0x03 << pGPIOHandle->GPIO_PinConfig->GPIOPinNumber);
 			pGPIOHandle->pGPIOx->MODER |= temp;
+			temp = 0;
+		} else {
+			// interuppt code
 
-		}
-		else{
-				///Interrupt code
 		}
 
 		//2. configure the speed
 		temp = 0;
-		temp = (pGPIOHandle->GPIO_PinConfig.GPIOSpeed <<( 2 * pGPIOHandle->GPIO_PinConfig.GPIOPinNumber ));
-		pGPIOHandle->pGPIOx->OSPEEDR &= ~(0x3 >> pGPIOHandle->GPIO_PinConfig.GPIOPinNumber);//clearing bits first
+		temp = pGPIOHandle->GPIO_PinConfig->GPIOSpeed << (2*pGPIOHandle->GPIO_PinConfig->GPIOPinNumber);
+		pGPIOHandle->pGPIOx->OSPEEDR &= ~(0x03 << pGPIOHandle->GPIO_PinConfig->GPIOPinNumber);
 		pGPIOHandle->pGPIOx->OSPEEDR |= temp;
-
-
+		temp = 0;
 		//3.configure the pull-up or pull-down register
 		temp = 0;
-		temp = (pGPIOHandle->GPIO_PinConfig.GPIO_pull_Up_Dwn <<( 2 * pGPIOHandle->GPIO_PinConfig.GPIOPinNumber));//clearing
-		pGPIOHandle->pGPIOx->PUPDR &= ~(0x3 >> pGPIOHandle->GPIO_PinConfig.GPIOPinNumber);
+		temp= pGPIOHandle->GPIO_PinConfig->GPIO_pull_Up_Dwn	<< (2 * pGPIOHandle->pGPIOx->PUPDR);
+		pGPIOHandle->pGPIOx->PUPDR &= ~(0x3 << pGPIOHandle->GPIO_PinConfig->GPIOPinNumber);
 		pGPIOHandle->pGPIOx->PUPDR |= temp;
-
 		//4. configure the output type
 		temp = 0;
-		temp = (pGPIOHandle->GPIO_PinConfig.GPIOOutputType << pGPIOHandle->GPIO_PinConfig.GPIOPinNumber);
-		pGPIOHandle->pGPIOx->OTYPER &= ~(0x1 >> pGPIOHandle->GPIO_PinConfig.GPIOPinNumber); // Clearing
-		pGPIOHandle->pGPIOx->OTYPER |= temp;
-		temp = 0;
-
+		temp = pGPIOHandle->GPIO_PinConfig->GPIOOutputType << (2*pGPIOHandle->pGPIOx->OTYPER);
+		pGPIOHandle->pGPIOx->OTYPER &= ~(0x03 << pGPIOHandle->GPIO_PinConfig->GPIOPinNumber);
+		pGPIOHandle->pGPIOx->OTYPER = temp;
 		//5. configure the alt-function type
 
-		if(pGPIOHandle->GPIO_PinConfig_t.GPIOMode == Alt_Fn_Mode )
-		{
-			uint8_t temp1, temp2;
-			temp1 = pGPIOHandle->GPIO_PinConfig_t.GPIOPinNumber / 8;
-			temp2 = pGPIOHandle->GPIO_PinConfig_t.GPIOPinNumber % 8;
-			pGPIOHandle->pGPIOx.AFR[ temp1 ] &= ~(0xF << ( 4 * temp2 ));
-			pGPIOHandle->pGPIOx.AFR[ temp1 ] |= ( pGPIOHandle->GPIO_PinConfig_t.Alt_Fn_Mode <<( 4 * temp2 ));
+		if(pGPIOHandle->GPIO_PinConfig->GPIOMode == GPIO_MODE_ALT_FN){
+		 uint32_t temp1, temp2;
+		 temp1 = pGPIOHandle->GPIO_PinConfig->GPIOPinNumber / 8;
+		 temp2 = pGPIOHandle->GPIO_PinConfig->GPIOPinNumber % 8;
+		 pGPIOHandle->pGPIOx->AFR[temp1] |= pGPIOHandle->GPIO_PinConfig->Alt_Fn_Mode <<(4* temp2);
+
+
 		}
-		temp = 0;
-	}
+		}
 
-
-
-/***************************************************************************************
+/***.************************************************************************************
 	 * @fn 					- GPIO_DeInit
 	 *
 	 * @brief 				- GPIO  de-initiatation function
@@ -217,43 +204,43 @@
  * ****************************************************************************************/
 	void GPIO_DeInit(GPIO_RegDef_t *pGPIOx){
 
-		if(GPIOx == GPIOA){
+		if(pGPIOx == GPIOA){
 					GPIOA_REG_RESET();
 					}
-		else if(GPIOx == GPIOB)
+		else if(pGPIOx == GPIOB)
 					{
 				GPIOB_REG_RESET();
 					}
 
-		else if(GPIOx == GPIOC)
+		else if(pGPIOx == GPIOC)
 		{
 				GPIOC_REG_RESET();
 		}
-		else if(GPIOx == GPIOD)
+		else if(pGPIOx == GPIOD)
 		{
 				GPIOD_REG_RESET();
 		}
-		else if (GPIOx == GPIOE)
+		else if (pGPIOx == GPIOE)
 		{
 				GPIOE_REG_RESET();
 		}
-		else if (GPIOX == GPIOF)
+		else if (pGPIOx == GPIOF)
 		{
 				GPIOE_REG_RESET();
 		}
-		else if (GPIOX == GPIOF)
+		else if (pGPIOx == GPIOF)
 		{
 				GPIOF_REG_RESET();
 		}
-		else if (GPIOX == GPIOG)
+		else if (pGPIOx == GPIOG)
 		{
 				GPIOG_REG_RESET();
 		}
-		else if (GPIOX == GPIOH)
+		else if (pGPIOx == GPIOH)
 		{
 				GPIOH_REG_RESET();
 		}
-		else if (GPIOX == GPIOI){
+		else if (pGPIOx == GPIOI){
 				GPIOI_REG_RESET();
 				}
 	}
@@ -376,6 +363,4 @@
 	void GPIO_IRQHandling(uint8_t PinNumber){
 
 	}
-
-
 
