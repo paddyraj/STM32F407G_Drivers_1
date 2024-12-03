@@ -8,15 +8,16 @@
 #include "STM32F4xx.h"
 #include "STM32F407_gpio_driver.h"
 #include <stdint.h>
-
+GPIO_Handle_t test;
 void delay(void){
-		for(uint32_t i = 0; i < 5999999999; i++);
+		for(uint32_t i = 0; i < 19999; i++);
 
 	}
 	int main(void){
 
-		GPIO_Handle_t test;
+
 		//GPIO_Init(&test);
+
 		test.pGPIOx = GPIOD;
 		test.GPIO_PinConfig->GPIOPinNumber = GPIO_PIN_12;
 		test.GPIO_PinConfig->GPIOMode = GPIO_MODE_OUT;
@@ -27,6 +28,7 @@ void delay(void){
 		GPIO_PClk_Ctr(GPIOD , ENABLE);
 		GPIO_Init(&test);
 		while (1){
+			GPIO_Toggle_Pin(GPIOD,GPIO_PIN_12);
 			delay();
 			return 0 ;
 		}

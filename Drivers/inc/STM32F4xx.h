@@ -267,6 +267,6 @@ typedef struct {						//OFFSET Address
 #define SYSCFG_PCLK_DI()		(	RCC->RCC_APB2ENR &= ~(1>>14) 	)
 
 
-//#include "STM32F407_gpio_driver.h"
+#include "STM32F407_gpio_driver.h"
 
 #endif /* STM3F4XX_H_ */

@@ -7,7 +7,7 @@
 
 #include "Stm32f4xx.h"
 //#include "STM32F407_gpio_driver.h"
-#include "STM32F407_gpio_driver.h"
+
 
 	/*
 	 * Peripheral Clock Setup
@@ -88,23 +88,17 @@
 			{
 					GPIOB_PCLK_DI();
 			}
-			else if(pGPIOx == GPIOB)
-			{
-					GPIOB_PCLK_DI();
-			}
+
 			else if(pGPIOx == GPIOC)
 			{
 				 	GPIOC_PCLK_DI();
 			}
 			else if(pGPIOx == GPIOD)
 			{
-					GPIOA_PCLK_DI();
+					GPIOD_PCLK_DI();
 			}
 			else if (pGPIOx == GPIOE)
 			{
-					GPIOE_PCLK_DI();
-			}
-			else if (pGPIOx == GPIOF){
 					GPIOE_PCLK_DI();
 			}
 			else if (pGPIOx == GPIOF){
@@ -155,7 +149,7 @@
 		if(pGPIOHandle->GPIO_PinConfig.GPIOMode <= GPIO_MODE_ANG_MD){
 
 			temp = (pGPIOHandle->GPIO_PinConfig.GPIOMode << ( 2 * pGPIOHandle->GPIO_PinConfig.GPIOPinNumber));//clearing
-			pGPIOHandle->pGPIOx->MODER &= ~(0x3 >> pGPIOHandle->GPIO_PinConfig.GPIOPinNumber);
+			pGPIOHandle->pGPIOx->MODER &= ~(0x3 << pGPIOHandle->GPIO_PinConfig->GPIOPinNumber);
 			pGPIOHandle->pGPIOx->MODER |= temp;
 
 		}
@@ -165,33 +159,34 @@
 
 		//2. configure the speed
 		temp = 0;
-		temp = (pGPIOHandle->GPIO_PinConfig.GPIOSpeed <<( 2 * pGPIOHandle->GPIO_PinConfig.GPIOPinNumber ));
-		pGPIOHandle->pGPIOx->OSPEEDR &= ~(0x3 >> pGPIOHandle->GPIO_PinConfig.GPIOPinNumber);//clearing bits first
+		temp = (pGPIOHandle->GPIO_PinConfig.GPIOSpeed <<( 2 * pGPIOHandle->GPIO_PinConfig->GPIOPinNumber ));
+		pGPIOHandle->pGPIOx->OSPEEDR &= ~(0x3 << pGPIOHandle->GPIO_PinConfig->GPIOPinNumber);//clearing bits first
 		pGPIOHandle->pGPIOx->OSPEEDR |= temp;
 
 
 		//3.configure the pull-up or pull-down register
 		temp = 0;
-		temp = (pGPIOHandle->GPIO_PinConfig.GPIO_pull_Up_Dwn <<( 2 * pGPIOHandle->GPIO_PinConfig.GPIOPinNumber));//clearing
-		pGPIOHandle->pGPIOx->PUPDR &= ~(0x3 >> pGPIOHandle->GPIO_PinConfig.GPIOPinNumber);
+		temp = (pGPIOHandle->GPIO_PinConfig.GPIO_pull_Up_Dwn <<( 2 * pGPIOHandle->GPIO_PinConfig->GPIOPinNumber));//clearing
+		pGPIOHandle->pGPIOx->PUPDR &= ~(0x3 << pGPIOHandle->GPIO_PinConfig->GPIOPinNumber);
 		pGPIOHandle->pGPIOx->PUPDR |= temp;
 
 		//4. configure the output type
 		temp = 0;
-		temp = (pGPIOHandle->GPIO_PinConfig.GPIOOutputType << pGPIOHandle->GPIO_PinConfig.GPIOPinNumber);
-		pGPIOHandle->pGPIOx->OTYPER &= ~(0x1 >> pGPIOHandle->GPIO_PinConfig.GPIOPinNumber); // Clearing
+		temp = (pGPIOHandle->GPIO_PinConfig.GPIOOutputType << pGPIOHandle->GPIO_PinConfig->GPIOPinNumber);
+		pGPIOHandle->pGPIOx->OTYPER &= ~(0x1 << pGPIOHandle->GPIO_PinConfig->GPIOPinNumber); // Clearing
 		pGPIOHandle->pGPIOx->OTYPER |= temp;
 		temp = 0;
 
 		//5. configure the alt-function type
 
-		if(pGPIOHandle->GPIO_PinConfig_t.GPIOMode == Alt_Fn_Mode )
+		if(pGPIOHandle->GPIO_PinConfig->GPIOMode == GPIO_MODE_ALT_FN )
 		{
+			//GPIO_PinConfig_t.GPIOMode
 			uint8_t temp1, temp2;
-			temp1 = pGPIOHandle->GPIO_PinConfig_t.GPIOPinNumber / 8;
-			temp2 = pGPIOHandle->GPIO_PinConfig_t.GPIOPinNumber % 8;
+			temp1 = pGPIOHandle->GPIO_PinConfig->GPIOPinNumber / 8;
+			temp2 = pGPIOHandle->GPIO_PinConfig->GPIOPinNumber % 8;
 			pGPIOHandle->pGPIOx.AFR[ temp1 ] &= ~(0xF << ( 4 * temp2 ));
-			pGPIOHandle->pGPIOx.AFR[ temp1 ] |= ( pGPIOHandle->GPIO_PinConfig_t.Alt_Fn_Mode <<( 4 * temp2 ));
+			pGPIOHandle->pGPIOx.AFR[ temp1 ] |= ( pGPIOHandle->GPIO_PinConfig->Alt_Fn_Mode <<( 4 * temp2 ));
 		}
 		temp = 0;
 	}
@@ -281,7 +276,7 @@
 	uint8_t GPIO_Read_From_Input_Pin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber){
 
 		uint8_t value;
-		value = (uint8_t)((pGPIOx->IDR << PinNumber) & 0x00000001);
+		value = (uint8_t)((pGPIOx->IDR >> PinNumber) & 0x00000001);
 		return value;
 	}
 
