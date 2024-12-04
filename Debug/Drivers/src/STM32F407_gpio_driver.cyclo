@@ -1,0 +1,10 @@
+../Drivers/src/STM32F407_gpio_driver.c:34:7:GPIO_PClk_Ctr	22
+../Drivers/src/STM32F407_gpio_driver.c:140:7:GPIO_Init	6
+../Drivers/src/STM32F407_gpio_driver.c:228:7:GPIO_DeInit	11
+../Drivers/src/STM32F407_gpio_driver.c:291:10:GPIO_Read_From_Input_Pin	1
+../Drivers/src/STM32F407_gpio_driver.c:315:11:GPIO_Read_From_Input_Port	1
+../Drivers/src/STM32F407_gpio_driver.c:338:7:GPIO_To_Output_Port	1
+../Drivers/src/STM32F407_gpio_driver.c:360:7:GPIO_To_Output_Pin	2
+../Drivers/src/STM32F407_gpio_driver.c:374:7:GPIO_Toggle_Pin	1
+../Drivers/src/STM32F407_gpio_driver.c:383:7:GPIO_IRQConfig	1
+../Drivers/src/STM32F407_gpio_driver.c:389:7:GPIO_IRQHandling	1

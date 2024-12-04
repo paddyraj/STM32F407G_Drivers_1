@@ -1,4 +1,4 @@
-"./Inc/STM32F407_gpio_driver.o"
+"./Drivers/src/STM32F407_gpio_driver.o"
 "./Src/001test2led.o"
 "./Src/syscalls.o"
 "./Src/sysmem.o"

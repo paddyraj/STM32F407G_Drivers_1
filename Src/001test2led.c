@@ -25,12 +25,13 @@ void delay(void){
 		test.GPIO_PinConfig->GPIOOutputType = GPIO_MODE_PP;
 		test.GPIO_PinConfig->GPIO_pull_Up_Dwn =GPIO_MODE_NOPP;
 
-		GPIO_PClk_Ctr(GPIOD , ENABLE);
+		GPIO_PClk_Ctr(GPIOD,ENABLE);
 		GPIO_Init(&test);
 		while (1){
 			GPIO_Toggle_Pin(GPIOD,GPIO_PIN_12);
 			delay();
 			return 0 ;
 		}
+
 		return 0;
 }
