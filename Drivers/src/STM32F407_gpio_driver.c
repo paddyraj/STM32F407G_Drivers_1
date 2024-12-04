@@ -167,6 +167,11 @@
 					EXTI->RTSR |= (1 << pGPIOHandle->GPIO_PinConfig->GPIOPinNumber);
 				}
 		// 2 configure the GPIO port selection in SYSCFG_EXTICR
+				uint8_t temp1 = pGPIOHandle->GPIO_PinConfig->GPIOPinNumber / 4 ;
+				uint8_t temp2 = pGPIOHandle->GPIO_PinConfig->GPIOPinNumber % 4;
+				uint8_t portcode = GPIO_BASE_ADDR_TO_CODE(pGPIOHandle->pGPIOx);
+				SYSCFG_PCLK_DI();
+				SYSCFG->SYSCFG_EXTICR[temp1] = portcode << (temp2 * 4);
 
 		//3 enable EXTI interrupt delivery using IMR
 				EXTI->IMR |= (1 << pGPIOHandle->GPIO_PinConfig->GPIOPinNumber);
@@ -359,7 +364,7 @@
 
 	void GPIO_To_Output_Pin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber,uint8_t Value){
 
-		if (pGPIOx == GPIO_PIN_SET){
+		if (Value == GPIO_PIN_SET){
 
 			//write 1 to the output pin of GPIO
 			pGPIOx->ODR |= (1 << PinNumber);
@@ -367,7 +372,7 @@
 
 		else {
 			//write 0 to the output pin of GPIO
-			pGPIOx->ODR |= (0 << PinNumber);
+			pGPIOx->ODR &= ~(1 << PinNumber);
 		}
 
 	}

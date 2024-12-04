@@ -25,11 +25,20 @@
  *
  * */
 
-#define FLASH_BASE_ADDR			0x08000000UL
-#define SRAM1_BASE_ADDR			0x20000000UL
-#define SRAM2_BASE_ADDR			0x2001C000UL
-#define ROM_BASE_ADDR			0x1FFF0000UL
+#define FLASH_BASE_ADDR			0x08000000U
+#define SRAM1_BASE_ADDR			0x20000000U
+#define SRAM2_BASE_ADDR			0x2001C000U
+#define ROM_BASE_ADDR			0x1FFF0000U
 #define SRAM_BASE_ADDR			SRAM1_BASE_ADDR
+
+// IRQ numbers
+#define IRQ_EXTI0				6
+#define IRQ_EXTI1				7
+#define IRQ_EXTI2				8
+#define IRQ_EXTI3				9
+#define IRQ_EXTI4				10
+#define IRQ_EXTI9_5				23
+#define IRQ_EXTI15_10			40
 
 //BUS BASE ADDRESS
 #define PERIPH_BASE 			0x40000000UL
@@ -90,7 +99,7 @@
 // // ExternalTimer ADDRESS ( ON APB2 BUS )
 
 #define EXTI_ADDR				(APB2_BASE_ADDR + 0x3C00)
-#define SYSCFG					(APB2_BASE_ADDR + 0x3800)
+#define SYSCFG_ADDR					(APB2_BASE_ADDR + 0x3800)
 
 
 
@@ -109,6 +118,17 @@ typedef struct
 	__vo uint32_t PR;				//				0x14
 
 	} EXTI_RegDef_t ;
+
+typedef struct {
+		__vo uint32_t SYSCFG_MEMRMP;				// 				0x00
+		__vo uint32_t SYSCFG_PMC;				//				0x04
+		__vo uint32_t SYSCFG_EXTICR[4];
+			 uint32_t Reserved1[2];
+		__vo uint32_t SYSCFG_CMPCR;
+			 uint32_t Reserved2[2];
+		__vo uint32_t SYSCFG_CFGR;				//				0x04
+}SysConfig_t;
+
 
 typedef struct
 {
@@ -183,7 +203,7 @@ typedef struct {						//OFFSET Address
 //RCC_RegDef specifications
 #define RCC 					((RCC_RegDef_t*)RCC_BASE_ADDR)
 #define EXTI					((EXTI_RegDef_t*)EXTI_ADDR)
-
+#define SYSCFG					((SysConfig_t*)SYSCFG_ADDR)
 /* Clock enable macros for GPIO
 */
 
@@ -212,6 +232,16 @@ typedef struct {						//OFFSET Address
 #define GPIOH_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<7));  (RCC->RCC_AHB1ENR &= ~(1<<7)); }while(0)
 #define GPIOI_REG_RESET()		do{(RCC->RCC_AHB1ENR |= (1<<8));  (RCC->RCC_AHB1ENR &= ~(1<<8)); }while(0)
 
+
+/* Port code macro */
+
+#define GPIO_BASE_ADDR_TO_CODE(x)	(x == GPIOA) ? 0 :\
+									(x == GPIOB) ? 1 :\
+									(x == GPIOC) ? 2 :\
+									(x == GPIOD) ? 3 :\
+									(x == GPIOE) ? 4 :\
+									(x == GPIOF) ? 5 :\
+								    (x == GPIOG) ? 6 :0
 
 /* Clock disable macros for GPIO
 */
